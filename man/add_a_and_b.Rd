@@ -20,3 +20,24 @@ This function returns the sum of two numbers.
 \examples{
 add_a_and_b(3, 5)
 }
+
+
+#' Filter DALY data for a selected country
+#'
+#' This function filters the DALYs dataset for a specific country, age group, and sex.
+#'
+#' @param data A data frame containing DALYs data.
+#' @param country A character string specifying the country to filter.
+#' @param age_group A character string specifying the age group (default is "All ages").
+#' @param sex A character string specifying the sex (default is "Both").
+#' @return A data frame filtered for the specified parameters.
+#' @export
+#' @examples
+#' filter_country_data(dalys, "Netherlands")
+filter_country_data <- function(data, country, age_group = "All ages", sex = "Both") {
+  data %>%
+    filter(location == country, age == age_group, sex == sex)
+}
+
+devtools::document()
+devtools::load_all()
