@@ -20,3 +20,21 @@ This function multiplies two numbers together.
 \examples{
 multiply_x_and_y(2, 4)
 }
+
+#' Prepare DALY map data
+#'
+#' Joins DALYs summary data with European map data for plotting.
+#'
+#' @param dalys_data A data frame with location and DALY values.
+#' @param map_data A simple features (sf) object containing European map data.
+#' @return A joined sf object ready for leaflet mapping.
+#' @export
+#' @examples
+#' prepare_map_data(dalys_map, europe_map)
+prepare_map_data <- function(dalys_data, map_data) {
+  map_data %>%
+    left_join(dalys_data, by = c("name" = "location"))
+}
+
+devtools::document()
+devtools::load_all()
