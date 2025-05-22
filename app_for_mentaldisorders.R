@@ -119,17 +119,19 @@ ui <- dashboardPage(
 )
 
 # Server
-server <- function(input, output) {
+server <- function(input, output, session) {
+
+  selected_country <- reactiveVal("Netherlands")
 
   filtered_data <- reactive({
     dalys %>%
-      filter(location == input$selected_location,
+      filter(location == selected_country(),
              age == "All ages",
              sex == "Both")
   })
 
   output$country_title <- renderText({
-    paste("DALYs per 100,000 for Mental Disorders for 2021 in", input$selected_location)
+    paste("DALYs per 100,000 for Mental Disorders for 2021 in", selected_country())
   })
 
   output$daly_plot <- renderPlot({
@@ -147,10 +149,25 @@ server <- function(input, output) {
         geom_text(aes(label = paste0(round(percentage, 1), "%")),
                   hjust = -0.1, size = 3.5) +
         labs(x = "Cause", y = "DALY rate per 100,000",
-             title = paste("Mental Disorders in", input$selected_location)) +
+             title = paste("Mental Disorders in", selected_country())) +
         theme_minimal() +
         coord_flip()
     }
+  })
+
+  observeEvent(input$selected_location, {
+    selected_country(input$selected_location)
+  })
+
+  observeEvent(input$daly_map_shape_click, {
+    clicked_country <- input$daly_map_shape_click$id
+    if (!is.null(clicked_country) && clicked_country %in% dalys$location) {
+      selected_country(clicked_country)
+    }
+  })
+
+  observe({
+    updateSelectInput(session, "selected_location", selected = selected_country())
   })
 
   output$daly_map <- renderLeaflet({
@@ -173,12 +190,14 @@ server <- function(input, output) {
           color = "#666",
           fillOpacity = 0.7,
           bringToFront = TRUE
-        )
+        ),
+        layerId = ~name
       ) %>%
       addLegend(pal = pal, values = ~total_dalys, opacity = 0.7,
                 title = "DALYs per 100,000", position = "bottomright")
   })
 }
+
 
 # Run the application
 shinyApp(ui = ui, server = server)
