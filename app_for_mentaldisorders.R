@@ -124,20 +124,30 @@ server <- function(input, output, session) {
   selected_country <- reactiveVal("Netherlands")
 
   filtered_data <- reactive({
-    dalys %>%
+    data <- dalys %>%
       filter(location == selected_country(),
              age == "All ages",
              sex == "Both")
+
+    if (nrow(data) == 0) {
+      return(NULL)
+    } else {
+      return(data)
+    }
   })
 
   output$country_title <- renderText({
-    paste("DALYs per 100,000 for Mental Disorders for 2021 in", selected_country())
+    if (is.null(filtered_data())) {
+      paste("No data available for", selected_country())
+    } else {
+      paste("DALYs per 100,000 for Mental Disorders for 2021 in", selected_country())
+    }
   })
 
   output$daly_plot <- renderPlot({
     data <- filtered_data()
 
-    if (nrow(data) == 0) {
+    if (is.null(data)) {
       plot.new()
       text(0.5, 0.5, "No data available for selected country.", cex = 1.5)
     } else {
@@ -155,10 +165,12 @@ server <- function(input, output, session) {
     }
   })
 
+  # Select from dropdown
   observeEvent(input$selected_location, {
     selected_country(input$selected_location)
   })
 
+  # Select from map
   observeEvent(input$daly_map_shape_click, {
     clicked_country <- input$daly_map_shape_click$id
     if (!is.null(clicked_country) && clicked_country %in% dalys$location) {
@@ -166,10 +178,12 @@ server <- function(input, output, session) {
     }
   })
 
+  # Sync dropdown with clicked country
   observe({
     updateSelectInput(session, "selected_location", selected = selected_country())
   })
 
+  # Map rendering
   output$daly_map <- renderLeaflet({
     pal <- colorNumeric("YlOrRd", domain = map_data$total_dalys)
 
@@ -198,8 +212,7 @@ server <- function(input, output, session) {
   })
 }
 
-
-# Run the application
+# Run the app
 shinyApp(ui = ui, server = server)
 
 
