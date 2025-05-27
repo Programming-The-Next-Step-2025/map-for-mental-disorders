@@ -57,6 +57,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+rmarkdown::render("report.Rmd", output_format = "html_document")
 
 ```{r setup}
 library(secondassignment)
