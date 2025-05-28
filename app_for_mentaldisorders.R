@@ -3,47 +3,22 @@
 # the 'Run App' button above.
 #
 
-#install.packages("leaflet")
-#install.packages("sf")
-#install.packages("rnaturalearth")
-#install.packages("rnaturalearthdata")
+#' @import shiny
+#' @import shinydashboard
+#' @import leaflet
+#' @import sf
+#' @importFrom rnaturalearth ne_countries
+#' @importFrom dplyr filter group_by summarise left_join mutate %>% recode
+#' @importFrom ggplot2 ggplot aes geom_col geom_text labs theme_minimal coord_flip
+#' @importFrom utils read.csv
 
-library(leaflet)
-library(sf)
-library(rnaturalearth)
-library(rnaturalearthdata)
-
-library(shiny)
-
-library(tidyverse)
-#install.packages("shinydashboard")
-library(shinydashboard)
 
 # Load the dataset
-dalys <- read.csv("mental_health_dalys_Europe.csv")
+dalys_path <- system.file("extdata", "mental_health_dalys_Europe.csv", package = "secondassignment")
+dalys <- read.csv(dalys_path)
 dalys <- dalys[nchar(dalys$location) < 50, ]
 
-# UI
-ui <- dashboardPage(
-  dashboardHeader(title = "Mental Health DALYs"),
-  dashboardSidebar(
-    selectInput("selected_location", "Select a country:",
-                choices = sort(unique(dalys$location)),
-                selected = "Netherlands")
-  ),
-  dashboardBody(
-    h4(textOutput("country_title")),
-    fluidRow(
-      box(
-        title = "DALYs for Mental Disorders",
-        status = "primary",
-        solidHeader = TRUE,
-        width = 12,
-        plotOutput("daly_plot", height = "400px")
-      )
-    )
-  )
-)
+
 # Prepare map data
 europe_map <- ne_countries(continent = "Europe", returnclass = "sf")
 
@@ -213,9 +188,18 @@ server <- function(input, output, session) {
 }
 
 # Run the app
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+startApp <- function() {
+  shinyApp(ui = ui, server = server)
+}
+
+startApp()
 shinyApp(ui = ui, server = server)
-
-
 
 #Title: Mental Health DALYs in Europe
 
