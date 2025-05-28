@@ -1,17 +1,15 @@
 #
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
-#
 
-#install.packages("leaflet")
-#install.packages("sf")
-#install.packages("rnaturalearth")
-#install.packages("rnaturalearthdata")
-
-library(leaflet)
-library(sf)
-library(rnaturalearth)
-library(rnaturalearthdata)
+#' @import shiny
+#' @import shinydashboard
+#' @import leaflet
+#' @import sf
+#' @importFrom rnaturalearth ne_countries
+#' @importFrom dplyr filter group_by summarise left_join mutate %>% recode
+#' @importFrom ggplot2 ggplot aes geom_col geom_text labs theme_minimal coord_flip
+#' @importFrom utils read.csv
 
 library(shiny)
 
