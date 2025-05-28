@@ -9,11 +9,10 @@
 #    https://shiny.posit.co/
 #
 
-library(shiny)
-
-library(tidyverse)
-#install.packages("shinydashboard") 
-library(shinydashboard)
+#library(shiny)
+#library(tidyverse)
+#install.packages("shinydashboard")
+#library(shinydashboard)
 
 # Load your dataset
 dalys <- read.csv("mental_health_dalys_Europe.csv")
@@ -31,9 +30,9 @@ ui <- dashboardPage(
     h4(textOutput("country_title")),
     fluidRow(
       box(
-        title = "DALYs for Mental Disorders", 
-        status = "primary", 
-        solidHeader = TRUE, 
+        title = "DALYs for Mental Disorders",
+        status = "primary",
+        solidHeader = TRUE,
         width = 12,
         plotOutput("daly_plot", height = "400px")
       )
@@ -43,21 +42,21 @@ ui <- dashboardPage(
 
 # Server
 server <- function(input, output) {
-  
+
   filtered_data <- reactive({
     dalys %>%
       filter(location == input$selected_location,
              age == "All ages",
              sex == "Both")
   })
-  
+
   output$country_title <- renderText({
     paste("DALYs per 100,000 for Mental Disorders for 2021 in", input$selected_location)
   })
-  
+
   output$daly_plot <- renderPlot({
     data <- filtered_data()
-    
+
     if (nrow(data) == 0) {
       plot.new()
       text(0.5, 0.5, "No data available for selected country.", cex = 1.5)
@@ -71,5 +70,5 @@ server <- function(input, output) {
   })
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
