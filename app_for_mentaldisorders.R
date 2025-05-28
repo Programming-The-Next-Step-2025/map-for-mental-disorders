@@ -91,7 +91,7 @@ ui <- dashboardPage(
 )
 
 # Server
-server <- function(input, output) {
+server <- function(input, output, session) {
 
   filtered_data <- reactive({
     dalys %>%
@@ -106,7 +106,6 @@ server <- function(input, output) {
 
   output$daly_plot <- renderPlot({
     data <- filtered_data()
-
     if (nrow(data) == 0) {
       plot.new()
       text(0.5, 0.5, "No data available for selected country.", cex = 1.5)
@@ -145,12 +144,21 @@ server <- function(input, output) {
           color = "#666",
           fillOpacity = 0.7,
           bringToFront = TRUE
-        )
+        ),
+        layerId = ~name
       ) %>%
       addLegend(pal = pal, values = ~total_dalys, opacity = 0.7,
                 title = "DALYs per 100,000", position = "bottomright")
   })
+
+  observeEvent(input$daly_map_shape_click, {
+    clicked_country <- input$daly_map_shape_click$id
+    if (!is.null(clicked_country) && clicked_country %in% dalys$location) {
+      updateSelectInput(session, "selected_location", selected = clicked_country)
+    }
+  })
 }
+
 
 # Run the application
 shinyApp(ui = ui, server = server)
