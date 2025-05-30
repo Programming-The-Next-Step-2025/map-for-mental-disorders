@@ -14,7 +14,7 @@
 #' @importFrom magrittr %>%
 
 # Load the dataset
-dalys <- read.csv("mental_health_dalys_Europe.csv")
+read.csv("C:/map-for-mental-disorders/inst/extdata/mental_health_dalys_Europe.csv")
 dalys <- dalys[nchar(dalys$location) < 50, ]
 
 # UI
