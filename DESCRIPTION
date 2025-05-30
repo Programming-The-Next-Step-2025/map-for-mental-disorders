@@ -1,0 +1,27 @@
+Package: secondassignment
+Type: Package
+Title: Mental Health DALYs App
+Version: 0.1.0
+Author: Chrystalla Georgiou
+Maintainer: Chrystalla Georgiou <chrystalla.georgiou@student.uva.nl>
+Description: A Shiny application for visualizing mental health burden across Europe
+    using DALYs per 100,000 population. Includes a map and bar chart interface
+    for exploring differences between countries and mental health conditions.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Imports:
+    shiny,
+    shinydashboard,
+    leaflet,
+    sf,
+    dplyr,
+    ggplot2,
+    rnaturalearth,
+    magrittr
+Suggests:
+    roxygen2,
+    knitr,
+    rmarkdown
+
