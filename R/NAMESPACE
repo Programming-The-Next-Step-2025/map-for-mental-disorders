@@ -23,3 +23,7 @@ importFrom(ggplot2, theme_minimal)
 importFrom(ggplot2, coord_flip)
 importFrom(magrittr, "%>%")
 importFrom(utils, read.csv)
+export
+startApp <- function() {
+  shinyApp(ui = ui, server = server)
+}
