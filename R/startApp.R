@@ -1,7 +1,5 @@
-#' Launch the Mental Health DALYs App
-#'
+#' @return Launches the mental health DALYs Shiny app
 #' @export
 startApp <- function() {
-  shinyApp(ui = ui, server = server)
+  shiny::shinyApp(ui = ui, server = server)
 }
-
