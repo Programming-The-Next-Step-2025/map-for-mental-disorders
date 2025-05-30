@@ -10,11 +10,13 @@
 #' @importFrom dplyr filter group_by summarise left_join mutate %>% recode
 #' @importFrom ggplot2 ggplot aes geom_col geom_text labs theme_minimal coord_flip
 #' @importFrom utils read.csv
+#' @export
 
 
-# Load the dataset
-dalys <- read.csv("R/mental_health_dalys_Europe.csv")
-dalys <- dalys[nchar(dalys$location) < 50, ]
+  # Load the dataset (use inst/extdata path for package safety)
+  dalys_path <- system.file("extdata", "mental_health_dalys_Europe.csv", package = "secondassignment")
+  dalys <- read.csv(dalys_path)
+  dalys <- dalys[nchar(dalys$location) < 50, ]
 
 # Prepare map data
 europe_map <- ne_countries(continent = "Europe", returnclass = "sf")
@@ -161,7 +163,9 @@ server <- function(input, output, session) {
 
 
 # Run the application
-shinyApp(ui = ui, server = server)
+#shinyApp(ui = ui, server = server)
+#secondassignment::startApp()
+
 
 
 
