@@ -5,12 +5,11 @@
 #' @import shiny
 #' @import shinydashboard
 #' @import leaflet
-#' @importFrom dplyr %>%
 #' @import sf
-#' @importFrom rnaturalearth ne_countries
-#' @importFrom dplyr filter group_by summarise left_join mutate %>% recode
-#' @importFrom ggplot2 ggplot aes geom_col geom_text labs theme_minimal coord_flip
-#' @importFrom utils read.csv
+#' @import rnaturalearth
+#' @import dplyr
+#' @import ggplot2
+#' @import utils
 
 
   # Load the dataset (use inst/extdata path for package safety)
