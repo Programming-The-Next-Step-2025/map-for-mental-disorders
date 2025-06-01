@@ -3,6 +3,7 @@
 #' @import leaflet
 #' @import sf
 #' @import dplyr
+#' @import rnaturalearth
 #' @import ggplot2
 #' @import utils
 
@@ -10,6 +11,7 @@
 dalys_path <- system.file("extdata", "mental_health_dalys_Europe.csv", package = "secondassignment")
 dalys <- read.csv(dalys_path)
 dalys <- dalys[nchar(dalys$location) < 50, ]
+europe_map <- rnaturalearth::ne_countries(continent = "Europe", returnclass = "sf")
 
 
 # Rename long country names to match map names
