@@ -1,0 +1,23 @@
+Package: secondassignment
+Type: Package
+Title: A Shiny Dashboard for Mental Health DALYs
+Version: 0.1.0
+Author: Your Name
+Maintainer: Your Email <you@example.com>
+Description: A Shiny app to visualize DALYs for mental health across Europe.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.5.0)
+Imports:
+  shiny,
+  shinydashboard,
+  leaflet,
+  sf,
+  rnaturalearth,
+  dplyr,
+  ggplot2,
+  utils
+RoxygenNote: 7.2.3
+
+
