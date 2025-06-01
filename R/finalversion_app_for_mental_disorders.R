@@ -2,7 +2,6 @@
 #' @import shinydashboard
 #' @import leaflet
 #' @import sf
-#' @import rnaturalearth
 #' @import dplyr
 #' @import ggplot2
 #' @import utils
@@ -12,8 +11,6 @@ dalys_path <- system.file("extdata", "mental_health_dalys_Europe.csv", package =
 dalys <- read.csv(dalys_path)
 dalys <- dalys[nchar(dalys$location) < 50, ]
 
-# Prepare map data
-europe_map <- rnaturalearth::ne_countries(continent = "Europe", returnclass = "sf")
 
 # Rename long country names to match map names
 dalys$location <- dplyr::recode(dalys$location,
