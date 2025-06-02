@@ -12,6 +12,8 @@ Then in R:
 devtools::load_all()
 secondassignment::startApp()
 
+remotes::install_github("Programming-The-Next-Step-2025/map-for-mental-disorders", INSTALL_opts = "--no-staged-install")
+
 Features
 Interactive Map: Click on a country or use the dropdown menu to select it.
 
