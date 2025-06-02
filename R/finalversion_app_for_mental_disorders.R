@@ -1,11 +1,4 @@
-#' @import shiny
-#' @import shinydashboard
-#' @import leaflet
-#' @import sf
-#' @import dplyr
-#' @import rnaturalearth
-#' @import ggplot2
-#' @import utils
+
 
 # Load the dataset
 dalys_path <- system.file("extdata", "mental_health_dalys_Europe.csv", package = "secondassignment")
