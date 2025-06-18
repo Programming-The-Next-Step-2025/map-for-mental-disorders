@@ -164,8 +164,8 @@ startApp <- function() {
 
 
 # Run the application
-#shinyApp(ui = ui, server = server)
-#secondassignment::startApp()
+shinyApp(ui = ui, server = server)
+secondassignment::startApp()
 
 
 
